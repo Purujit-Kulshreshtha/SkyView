@@ -11,7 +11,8 @@ This is a web application developed to allow users to find the best metro (subwa
 
 The application was built using React and does not have a server or backend side. It also makes use of ReactScroll for smooth scrolling throughout the application, Font-Awesome for icons, unDraw for grpahics (SVGs) and Pexels Video for video element. 
 
-
+Scope of improvement:
+Scrillbar could be changed to match aesthetic msg for the website but React 17 makes it a bit more complicated. 
 
 
 #ONLY TECHNICAL DETAILS BELOW, NOT NECESSARY TO READ, HERE FOR CURIOUS MINDS
