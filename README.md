@@ -2,7 +2,7 @@
 
 Netlify Link: https://skyviewdmrc.netlify.app/
 (The background on the top of the site is a video, may take a few seconds to start playing due to Netlify lag)
-
+Make sure to click the Twitter icon in the footer. Just a little joke ;) 
 To try the application locally, simply clone the repository or download the code, in the main folder, run the command 'npm install'. This will install all dependecies. Once complete, run the command 'npm start; and it will start the React Server on localhost:3000.
 
 Web-application to facilitate the use of the New-Delhi (Inida) Metro System [Timathon Submission]
