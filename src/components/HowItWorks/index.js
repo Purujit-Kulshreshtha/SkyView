@@ -53,7 +53,7 @@ const HowItWorks = () => {
 					For more information, feel free to
 
 
-					 <Highlight to="/contact">contact the developer. </Highlight></Content>
+					 <Highlight smooth duration={500} to="contact">contact the developer. </Highlight></Content>
 					
 				</ContentWrap>
 				
