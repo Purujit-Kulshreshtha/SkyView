@@ -1,6 +1,7 @@
 # SkyView
 
 Netlify Link: https://skyviewdmrc.netlify.app/
+(The background on the top of the site is a video, may take a few seconds to start playing due to Netlify lag)
 
 To try the application, simply clone the repository or download the code, in the main folder, run the command 'npm install'. This will install all dependecies. Once complete, run the command 'npm start; and it will start the React Server on localhost:3000.
 
