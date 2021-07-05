@@ -3,7 +3,7 @@
 Netlify Link: https://skyviewdmrc.netlify.app/
 (The background on the top of the site is a video, may take a few seconds to start playing due to Netlify lag)
 
-To try the application, simply clone the repository or download the code, in the main folder, run the command 'npm install'. This will install all dependecies. Once complete, run the command 'npm start; and it will start the React Server on localhost:3000.
+To try the application locally, simply clone the repository or download the code, in the main folder, run the command 'npm install'. This will install all dependecies. Once complete, run the command 'npm start; and it will start the React Server on localhost:3000.
 
 Web-application to facilitate the use of the New-Delhi (Inida) Metro System [Timathon Submission]
 
@@ -11,4 +11,8 @@ This is a web application developed to allow users to find the best metro (subwa
 
 The application was built using React and does not have a server or backend side. It also makes use of ReactScroll for smooth scrolling throughout the application, Font-Awesome for icons, unDraw for grpahics (SVGs) and Pexels Video for video element. 
 
+
+
+
+#ONLY TECHNICAL DETAILS BELOW, NOT NECESSARY TO READ, HERE FOR CURIOUS MINDS
 
