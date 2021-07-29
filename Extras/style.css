@@ -1,0 +1,15 @@
+body{
+}
+
+.test{
+	overflow: scroll;
+	width: 500px;
+	background: red;
+	position: relative;
+}
+#canvas1{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
