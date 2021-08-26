@@ -1,0 +1,58 @@
+.login-main-container{
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: black;
+}
+
+.login-modal-container{
+	background: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 2rem;
+	width: 600px;
+}
+
+.login-modal-heading{
+	font-weight: bold;
+	color: #4470ad;
+}
+
+.login-modal-explain{
+	font-size: 10px;
+}
+
+.google-login-button{
+	border: none;
+	background: #4470ad;
+	color: white;
+	font-weight: bold;
+	margin: 2rem 0rem;
+	margin-bottom: 0.5rem;
+	width: 210px;
+	padding: 1rem;
+	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+}
+
+.google-login-button:hover{
+	filter: brightness(90%);
+}
+
+.login-home-button{
+	border: none;
+	background: white;
+	color: #dc3545;
+	margin: 2rem 0rem;
+	margin-top: 0.5rem;
+	padding: 1rem;
+	width: 210px;
+	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+}
+
+.login-home-button:hover{
+	filter: brightness(90%);
+}

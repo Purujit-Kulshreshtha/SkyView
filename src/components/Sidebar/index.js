@@ -16,7 +16,7 @@ const Sidebar = ({ isOpen, toggle }) => {
 				</SidebarMenu>
 			</SidebarWrapper>
 			<SideBtnWrap>
-				<SidebarRoute to='contact' onClick={toggle}duration={500} offset={-80} smooth>Contact Us</SidebarRoute>
+				<SidebarRoute to='contact' onClick={toggle}duration={500} offset={-80} smooth>Login</SidebarRoute>
 			</SideBtnWrap>
 		</SidebarContainer>
 		)

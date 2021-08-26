@@ -67,7 +67,7 @@ const Footer = () => {
 						<SocialIcons>
 							<SocialIconLink href='https://github.com/Purujit-Kulshreshtha' target="_blank"><FaGithub /></SocialIconLink>
 							<SocialIconLink href='https://www.linkedin.com/in/purujit-kulshreshtha-a149a11aa/' target="_blank"><FaLinkedin /></SocialIconLink>
-							<SocialIconLink href='https://twitter.com/rickastley?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor' target="_blank"><FaTwitter /></SocialIconLink>
+							<SocialIconLink href='https://twitter.com/rickastley' target="_blank"><FaTwitter /></SocialIconLink>
 							<SocialIconLink href='https://www.youtube.com/channel/UCZJ8ejHCTVg20Qchx01UwAQ' target="_blank"><FaYoutube /></SocialIconLink>
 						</SocialIcons>
 					</SocialMediaWrap>

@@ -1,6 +1,4 @@
-import React, {useState, useEffect} from 'react';
 import {redStations, yellowStations, blueStations, blue2Stations, greenStations, green2Stations, rapidStations, airportExpressStations, pinkStations, violetStations, magentaStations, aquaStations, grayStations, redConnections, yellowConnections, blueConnections, blue2Connections, greenConnections, green2Connections, rapidConnections, airportExpressConnections, pinkConnections, violetConnections, magentaConnections, aquaConnections, grayConnections} from './stations'
-import './routeElements.css';
 
 //LENGTH OF ALL LINES
 	const redLength = redStations.length
@@ -17,385 +15,296 @@ import './routeElements.css';
 	const aquaLength = aquaStations.length
 	const grayLength = grayStations.length
 
-
-const Image = ({station, number}) => {
-
-	// const getColor = (colorName) => {
-	// 	var lineColor;
-	// 	switch(colorName){
-	// 			case "YELLOW":
-	// 				lineColor = "#f6ff00";
-	// 				break
-	// 			case "BLUE":
-	// 				lineColor = "#372aa8"
-	// 				break
-	// 			case "BLUE2":
-	// 				lineColor = "#372aa8"
-	// 				break
-	// 			case "RED":
-	// 				lineColor = "#a82a41"
-	// 				break	
-	// 			case "GREEN": 
-	// 				lineColor = "#1ad102"
-	// 				break
-	// 			case "GREEN2": 
-	// 				lineColor = "#1ad102"
-	// 				break
-	// 			case "RAPID": 
-	// 				lineColor = "#2a2a2a"
-	// 				break
-	// 			case "AIRPORT":
-	// 				lineColor = "#ff8400"
-	// 				break
-	// 			case "VIOLET": 
-	// 				lineColor = "#720d91"
-	// 				break
-	// 			case "MAGENTA": 
-	// 				lineColor = "#ab055e"
-	// 				break
-	// 			case "AQUA": 
-	// 				lineColor = "#05ab8f"
-	// 				break
-	// 			case "PINK":
-	// 				lineColor = "#ffc7ee"
-	// 				break
-	// 			case "GRAY":
-	// 				lineColor = "#404040"
-	// 				break
-	// 			default:
-	// 				lineColor = "#000"
-	// 		}
-	// 		return lineColor;
-	// }
-
-	const split = station.split(" ")
-	const color = split[0]
-	const nameList = split.slice(1, split.length)
-	var name = ""
-	nameList.forEach((stationName) => {
-		name += stationName
-	})
-	if (number > 1) {
-		return (
-			<>
-				<div className="lineContainer">
-					<div className={`line ${color}`}></div>
-				</div>
-				<div className="nameWrapper">
-					<div className="blip"></div>
-					<p className="title">{name}</p>
-				</div>
-			</>
-			)
-	} else {
-		return(
-				<div className="nameWrapper">
-					<div className="blip"></div>
-					<p className="title">{name}</p>
-				</div>
-			)
-	}
-
+const getPointColor = (point) => {
+	if (redStations.includes(point)){
+		return "RED";
+	} else if (yellowStations.includes(point)) {
+		return "YELLOW";
+	} else if (blueStations.includes(point)) {
+		return "BLUE";
+	} else if (greenStations.includes(point)) {
+		return "GREEN";
+	} else if (violetStations.includes(point)) {
+		return "VIOLET";
+	} else if (magentaStations.includes(point)) {
+		return "MAGENTA";
+	} else if (airportExpressStations.includes(point)) {
+		return "AIRPORT";
+	} else if (pinkStations.includes(point)) {
+		return "PINK";
+	} else if (blue2Stations.includes(point)) {
+		return "BLUE2";
+	} else if (green2Stations.includes(point)) {
+		return "GREEN2";
+	} else if (rapidStations.includes(point)) {
+		return "RAPID";
+	} else if (grayStations.includes(point)) {
+		return "GRAY";
+	} else if (aquaStations.includes(point)) {
+		return "AQUA";
+	} 
 }
 
-const Route = ({startStation, endStation}) => {
+const routeComputer = (startStation, endStation) => {
 
 	const graph = new Map()
 	var currentStation;
 	var nextStation;
 	var previousStation;
 	var connection;
-	const [route, setRoute] = useState([]);
 	// const [count, setCount] = useState(1)
 
-	const makeGraph = () => {
-		// ADDING ALL STATIONS TO graph-LIST
-			// ADD RED LINE STATIONS TO graph-LIST
-				for (let i = 0; i < redLength; i++) {
-					currentStation = `RED ${redStations[i]}`
-					if (i === 0){
-						nextStation = `RED ${redStations[i+1]}`
-						graph.set(currentStation, [i, nextStation])
-					} else if (i === redLength-1) {
-						previousStation = `RED ${redStations[i-1]}`
-						graph.set(currentStation, [i, previousStation])
-					} else {
-						nextStation = `RED ${redStations[i+1]}`
-						previousStation = `RED ${redStations[i-1]}`
-						graph.set(currentStation, [i, previousStation, nextStation])
-					}
-				}
-				for (connection of redConnections) {
-					graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
-				}
 
-			// ADD YELLOW LINE STATIONS TO graph-LIST
-				for (let i = 0; i < yellowLength; i++) {
-					currentStation = `YELLOW ${yellowStations[i]}`
-					if (i === 0){
-						nextStation = `YELLOW ${yellowStations[i+1]}`
-						graph.set(currentStation, [i, nextStation])
-					} else if (i === yellowLength-1) {
-						previousStation = `YELLOW ${yellowStations[i-1]}`
-						graph.set(currentStation, [i, previousStation])
-					} else {
-						nextStation = `YELLOW ${yellowStations[i+1]}`
-						previousStation = `YELLOW ${yellowStations[i-1]}`
-						graph.set(currentStation, [i, previousStation, nextStation])
-					}
+	// ADDING ALL STATIONS TO graph-LIST
+		// ADD RED LINE STATIONS TO graph-LIST
+			for (let i = 0; i < redLength; i++) {
+				currentStation = `RED ${redStations[i]}`
+				if (i === 0){
+					nextStation = `RED ${redStations[i+1]}`
+					graph.set(currentStation, [i, nextStation])
+				} else if (i === redLength-1) {
+					previousStation = `RED ${redStations[i-1]}`
+					graph.set(currentStation, [i, previousStation])
+				} else {
+					nextStation = `RED ${redStations[i+1]}`
+					previousStation = `RED ${redStations[i-1]}`
+					graph.set(currentStation, [i, previousStation, nextStation])
 				}
-				for (connection of yellowConnections) {
-					graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
-				}
+			}
+			for (connection of redConnections) {
+				graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
+			}
 
-			// ADD BLUE LINE STATIONS TO graph-LIST
-				for (let i = 0; i < blueLength; i++) {
-					currentStation = `BLUE ${blueStations[i]}`
-					if (i === 0){
-						nextStation = `BLUE ${blueStations[i+1]}`
-						graph.set(currentStation, [i, nextStation])
-					} else if (i === blueLength-1) {
-						previousStation = `BLUE ${blueStations[i-1]}`
-						graph.set(currentStation, [i, previousStation])
-					} else {
-						nextStation = `BLUE ${blueStations[i+1]}`
-						previousStation = `BLUE ${blueStations[i-1]}`
-						graph.set(currentStation, [i, previousStation, nextStation])
-					}
+		// ADD YELLOW LINE STATIONS TO graph-LIST
+			for (let i = 0; i < yellowLength; i++) {
+				currentStation = `YELLOW ${yellowStations[i]}`
+				if (i === 0){
+					nextStation = `YELLOW ${yellowStations[i+1]}`
+					graph.set(currentStation, [i, nextStation])
+				} else if (i === yellowLength-1) {
+					previousStation = `YELLOW ${yellowStations[i-1]}`
+					graph.set(currentStation, [i, previousStation])
+				} else {
+					nextStation = `YELLOW ${yellowStations[i+1]}`
+					previousStation = `YELLOW ${yellowStations[i-1]}`
+					graph.set(currentStation, [i, previousStation, nextStation])
 				}
-				for (connection of blueConnections) {
-					graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
-				}
+			}
+			for (connection of yellowConnections) {
+				graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
+			}
 
-			// ADD AIRPORT LINE STATIONS TO graph-LIST
-				for (let i = 0; i < airportExpressLength; i++) {
-					currentStation = `AIRPORT ${airportExpressStations[i]}`
-					if (i === 0){
-						nextStation = `AIRPORT ${airportExpressStations[i+1]}`
-						graph.set(currentStation, [i, nextStation])
-					} else if (i === airportExpressLength-1) {
-						previousStation = `AIRPORT ${airportExpressStations[i-1]}`
-						graph.set(currentStation, [i, previousStation])
-					} else {
-						nextStation = `AIRPORT ${airportExpressStations[i+1]}`
-						previousStation = `AIRPORT ${airportExpressStations[i-1]}`
-						graph.set(currentStation, [i, previousStation, nextStation])
-					}
+		// ADD BLUE LINE STATIONS TO graph-LIST
+			for (let i = 0; i < blueLength; i++) {
+				currentStation = `BLUE ${blueStations[i]}`
+				if (i === 0){
+					nextStation = `BLUE ${blueStations[i+1]}`
+					graph.set(currentStation, [i, nextStation])
+				} else if (i === blueLength-1) {
+					previousStation = `BLUE ${blueStations[i-1]}`
+					graph.set(currentStation, [i, previousStation])
+				} else {
+					nextStation = `BLUE ${blueStations[i+1]}`
+					previousStation = `BLUE ${blueStations[i-1]}`
+					graph.set(currentStation, [i, previousStation, nextStation])
 				}
-				for (connection of airportExpressConnections) {
-					graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
-				}
+			}
+			for (connection of blueConnections) {
+				graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
+			}
 
-			// ADD GREEN LINE STATIONS TO graph-LIST
-				for (let i = 0; i < greenLength; i++) {
-					currentStation = `GREEN ${greenStations[i]}`
-					if (i === 0){
-						nextStation = `GREEN ${greenStations[i+1]}`
-						graph.set(currentStation, [i, nextStation])
-					} else if (i === greenLength-1) {
-						previousStation = `GREEN ${greenStations[i-1]}`
-						graph.set(currentStation, [i, previousStation])
-					} else {
-						nextStation = `GREEN ${greenStations[i+1]}`
-						previousStation = `GREEN ${greenStations[i-1]}`
-						graph.set(currentStation, [i, previousStation, nextStation])
-					}
+		// ADD AIRPORT LINE STATIONS TO graph-LIST
+			for (let i = 0; i < airportExpressLength; i++) {
+				currentStation = `AIRPORT ${airportExpressStations[i]}`
+				if (i === 0){
+					nextStation = `AIRPORT ${airportExpressStations[i+1]}`
+					graph.set(currentStation, [i, nextStation])
+				} else if (i === airportExpressLength-1) {
+					previousStation = `AIRPORT ${airportExpressStations[i-1]}`
+					graph.set(currentStation, [i, previousStation])
+				} else {
+					nextStation = `AIRPORT ${airportExpressStations[i+1]}`
+					previousStation = `AIRPORT ${airportExpressStations[i-1]}`
+					graph.set(currentStation, [i, previousStation, nextStation])
 				}
-				for (connection of greenConnections) {
-					graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
-				}
+			}
+			for (connection of airportExpressConnections) {
+				graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
+			}
 
-			// ADD RAPID LINE STATIONS TO graph-LIST
-				for (let i = 0; i < rapidLength; i++) {
-					currentStation = `RAPID ${rapidStations[i]}`
-					if (i === 0){
-						nextStation = `RAPID ${rapidStations[i+1]}`
-						graph.set(currentStation, [i, nextStation])
-					} else if (i === rapidLength-1) {
-						previousStation = `RAPID ${rapidStations[i-1]}`
-						graph.set(currentStation, [i, previousStation])
-					} else {
-						nextStation = `RAPID ${rapidStations[i+1]}`
-						previousStation = `RAPID ${rapidStations[i-1]}`
-						graph.set(currentStation, [i, previousStation, nextStation])
-					}
+		// ADD GREEN LINE STATIONS TO graph-LIST
+			for (let i = 0; i < greenLength; i++) {
+				currentStation = `GREEN ${greenStations[i]}`
+				if (i === 0){
+					nextStation = `GREEN ${greenStations[i+1]}`
+					graph.set(currentStation, [i, nextStation])
+				} else if (i === greenLength-1) {
+					previousStation = `GREEN ${greenStations[i-1]}`
+					graph.set(currentStation, [i, previousStation])
+				} else {
+					nextStation = `GREEN ${greenStations[i+1]}`
+					previousStation = `GREEN ${greenStations[i-1]}`
+					graph.set(currentStation, [i, previousStation, nextStation])
 				}
-				for (connection of rapidConnections) {
-					graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
-				}
+			}
+			for (connection of greenConnections) {
+				graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
+			}
 
-			// ADD VIOLET LINE STATIONS TO graph-LIST
-				for (let i = 0; i < violetLength; i++) {
-					currentStation = `VIOLET ${violetStations[i]}`
-					if (i === 0){
-						nextStation = `VIOLET ${violetStations[i+1]}`
-						graph.set(currentStation, [i, nextStation])
-					} else if (i === violetLength-1) {
-						previousStation = `VIOLET ${violetStations[i-1]}`
-						graph.set(currentStation, [i, previousStation])
-					} else {
-						nextStation = `VIOLET ${violetStations[i+1]}`
-						previousStation = `VIOLET ${violetStations[i-1]}`
-						graph.set(currentStation, [i, previousStation, nextStation])
-					}
+		// ADD RAPID LINE STATIONS TO graph-LIST
+			for (let i = 0; i < rapidLength; i++) {
+				currentStation = `RAPID ${rapidStations[i]}`
+				if (i === 0){
+					nextStation = `RAPID ${rapidStations[i+1]}`
+					graph.set(currentStation, [i, nextStation])
+				} else if (i === rapidLength-1) {
+					previousStation = `RAPID ${rapidStations[i-1]}`
+					graph.set(currentStation, [i, previousStation])
+				} else {
+					nextStation = `RAPID ${rapidStations[i+1]}`
+					previousStation = `RAPID ${rapidStations[i-1]}`
+					graph.set(currentStation, [i, previousStation, nextStation])
 				}
-				for (connection of violetConnections) {
-					graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
-				}
+			}
+			for (connection of rapidConnections) {
+				graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
+			}
 
-			// ADD MAGENTA LINE STATIONS TO graph-LIST
-				for (let i = 0; i < magentaLength; i++) {
-					currentStation = `MAGENTA ${magentaStations[i]}`
-					if (i === 0){
-						nextStation = `MAGENTA ${magentaStations[i+1]}`
-						graph.set(currentStation, [i, nextStation])
-					} else if (i === magentaLength-1) {
-						previousStation = `MAGENTA ${magentaStations[i-1]}`
-						graph.set(currentStation, [i, previousStation])
-					} else {
-						nextStation = `MAGENTA ${magentaStations[i+1]}`
-						previousStation = `MAGENTA ${magentaStations[i-1]}`
-						graph.set(currentStation, [i, previousStation, nextStation])
-					}
+		// ADD VIOLET LINE STATIONS TO graph-LIST
+			for (let i = 0; i < violetLength; i++) {
+				currentStation = `VIOLET ${violetStations[i]}`
+				if (i === 0){
+					nextStation = `VIOLET ${violetStations[i+1]}`
+					graph.set(currentStation, [i, nextStation])
+				} else if (i === violetLength-1) {
+					previousStation = `VIOLET ${violetStations[i-1]}`
+					graph.set(currentStation, [i, previousStation])
+				} else {
+					nextStation = `VIOLET ${violetStations[i+1]}`
+					previousStation = `VIOLET ${violetStations[i-1]}`
+					graph.set(currentStation, [i, previousStation, nextStation])
 				}
-				for (connection of magentaConnections) {
-					graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
-				}
+			}
+			for (connection of violetConnections) {
+				graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
+			}
 
-			// ADD PINK LINE STATIONS TO graph-LIST
-				for (let i = 0; i < pinkLength; i++) {
-					currentStation = `PINK ${pinkStations[i]}`
-					if (i === 0){
-						nextStation = `PINK ${pinkStations[i+1]}`
-						graph.set(currentStation, [i, nextStation])
-					} else if (i === pinkLength-1) {
-						previousStation = `PINK ${pinkStations[i-1]}`
-						graph.set(currentStation, [i, previousStation])
-					} else {
-						nextStation = `PINK ${pinkStations[i+1]}`
-						previousStation = `PINK ${pinkStations[i-1]}`
-						graph.set(currentStation, [i, previousStation, nextStation])
-					}
+		// ADD MAGENTA LINE STATIONS TO graph-LIST
+			for (let i = 0; i < magentaLength; i++) {
+				currentStation = `MAGENTA ${magentaStations[i]}`
+				if (i === 0){
+					nextStation = `MAGENTA ${magentaStations[i+1]}`
+					graph.set(currentStation, [i, nextStation])
+				} else if (i === magentaLength-1) {
+					previousStation = `MAGENTA ${magentaStations[i-1]}`
+					graph.set(currentStation, [i, previousStation])
+				} else {
+					nextStation = `MAGENTA ${magentaStations[i+1]}`
+					previousStation = `MAGENTA ${magentaStations[i-1]}`
+					graph.set(currentStation, [i, previousStation, nextStation])
 				}
-				for (connection of pinkConnections) {
-					graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
+			}
+			for (connection of magentaConnections) {
+				graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
+			}
+
+		// ADD PINK LINE STATIONS TO graph-LIST
+			for (let i = 0; i < pinkLength; i++) {
+				currentStation = `PINK ${pinkStations[i]}`
+				if (i === 0){
+					nextStation = `PINK ${pinkStations[i+1]}`
+					graph.set(currentStation, [i, nextStation])
+				} else if (i === pinkLength-1) {
+					previousStation = `PINK ${pinkStations[i-1]}`
+					graph.set(currentStation, [i, previousStation])
+				} else {
+					nextStation = `PINK ${pinkStations[i+1]}`
+					previousStation = `PINK ${pinkStations[i-1]}`
+					graph.set(currentStation, [i, previousStation, nextStation])
 				}
+			}
+			for (connection of pinkConnections) {
+				graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
+			}
 
 
 
-			// ADD BLUE2 LINE STATIONS TO graph-LIST
-				for (let i = 0; i < blue2Length; i++) {
-					currentStation = `BLUE2 ${blue2Stations[i]}`
-					if (i === 0){
-						nextStation = `BLUE2 ${blue2Stations[i+1]}`
-						graph.set(currentStation, [i, nextStation])
-					} else if (i === blue2Length-1) {
-						previousStation = `BLUE2 ${blue2Stations[i-1]}`
-						graph.set(currentStation, [i, previousStation])
-					} else {
-						nextStation = `BLUE2 ${blue2Stations[i+1]}`
-						previousStation = `BLUE2 ${blue2Stations[i-1]}`
-						graph.set(currentStation, [i, previousStation, nextStation])
-					}
+		// ADD BLUE2 LINE STATIONS TO graph-LIST
+			for (let i = 0; i < blue2Length; i++) {
+				currentStation = `BLUE2 ${blue2Stations[i]}`
+				if (i === 0){
+					nextStation = `BLUE2 ${blue2Stations[i+1]}`
+					graph.set(currentStation, [i, nextStation])
+				} else if (i === blue2Length-1) {
+					previousStation = `BLUE2 ${blue2Stations[i-1]}`
+					graph.set(currentStation, [i, previousStation])
+				} else {
+					nextStation = `BLUE2 ${blue2Stations[i+1]}`
+					previousStation = `BLUE2 ${blue2Stations[i-1]}`
+					graph.set(currentStation, [i, previousStation, nextStation])
 				}
-				for (connection of blue2Connections) {
-					graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
-				}
+			}
+			for (connection of blue2Connections) {
+				graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
+			}
 
-			// ADD GREEN2 LINE STATIONS TO graph-LIST
-				for (let i = 0; i < green2Length; i++) {
-					currentStation = `GREEN2 ${green2Stations[i]}`
-					if (i === 0){
-						nextStation = `GREEN2 ${green2Stations[i+1]}`
-						graph.set(currentStation, [i, nextStation])
-					} else if (i === green2Length-1) {
-						previousStation = `GREEN2 ${green2Stations[i-1]}`
-						graph.set(currentStation, [i, previousStation])
-					} else {
-						nextStation = `GREEN2 ${green2Stations[i+1]}`
-						previousStation = `GREEN2 ${green2Stations[i-1]}`
-						graph.set(currentStation, [i, previousStation, nextStation])
-					}
+		// ADD GREEN2 LINE STATIONS TO graph-LIST
+			for (let i = 0; i < green2Length; i++) {
+				currentStation = `GREEN2 ${green2Stations[i]}`
+				if (i === 0){
+					nextStation = `GREEN2 ${green2Stations[i+1]}`
+					graph.set(currentStation, [i, nextStation])
+				} else if (i === green2Length-1) {
+					previousStation = `GREEN2 ${green2Stations[i-1]}`
+					graph.set(currentStation, [i, previousStation])
+				} else {
+					nextStation = `GREEN2 ${green2Stations[i+1]}`
+					previousStation = `GREEN2 ${green2Stations[i-1]}`
+					graph.set(currentStation, [i, previousStation, nextStation])
 				}
-				for (connection of green2Connections) {
-					graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
-				}
+			}
+			for (connection of green2Connections) {
+				graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
+			}
 
-			// ADD AQUA LINE STATIONS TO graph-LIST
-				for (let i = 0; i < aquaLength; i++) {
-					currentStation = `AQUA ${aquaStations[i]}`
-					if (i === 0){
-						nextStation = `AQUA ${aquaStations[i+1]}`
-						graph.set(currentStation, [i, nextStation])
-					} else if (i === aquaLength-1) {
-						previousStation = `AQUA ${aquaStations[i-1]}`
-						graph.set(currentStation, [i, previousStation])
-					} else {
-						nextStation = `AQUA ${aquaStations[i+1]}`
-						previousStation = `AQUA ${aquaStations[i-1]}`
-						graph.set(currentStation, [i, previousStation, nextStation])
-					}
+		// ADD AQUA LINE STATIONS TO graph-LIST
+			for (let i = 0; i < aquaLength; i++) {
+				currentStation = `AQUA ${aquaStations[i]}`
+				if (i === 0){
+					nextStation = `AQUA ${aquaStations[i+1]}`
+					graph.set(currentStation, [i, nextStation])
+				} else if (i === aquaLength-1) {
+					previousStation = `AQUA ${aquaStations[i-1]}`
+					graph.set(currentStation, [i, previousStation])
+				} else {
+					nextStation = `AQUA ${aquaStations[i+1]}`
+					previousStation = `AQUA ${aquaStations[i-1]}`
+					graph.set(currentStation, [i, previousStation, nextStation])
 				}
-				for (connection of aquaConnections) {
-					graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
-				}
+			}
+			for (connection of aquaConnections) {
+				graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
+			}
 
-			// ADD GRAY LINE STATIONS TO graph-LIST
-				for (let i = 0; i < grayLength; i++) {
-					currentStation = `GRAY ${grayStations[i]}`
-					if (i === 0){
-						nextStation = `GRAY ${grayStations[i+1]}`
-						graph.set(currentStation, [i, nextStation])
-					} else if (i === grayLength-1) {
-						previousStation = `GRAY ${grayStations[i-1]}`
-						graph.set(currentStation, [i, previousStation])
-					} else {
-						nextStation = `GRAY ${grayStations[i+1]}`
-						previousStation = `GRAY ${grayStations[i-1]}`
-						graph.set(currentStation, [i, previousStation, nextStation])
-					}
+		// ADD GRAY LINE STATIONS TO graph-LIST
+			for (let i = 0; i < grayLength; i++) {
+				currentStation = `GRAY ${grayStations[i]}`
+				if (i === 0){
+					nextStation = `GRAY ${grayStations[i+1]}`
+					graph.set(currentStation, [i, nextStation])
+				} else if (i === grayLength-1) {
+					previousStation = `GRAY ${grayStations[i-1]}`
+					graph.set(currentStation, [i, previousStation])
+				} else {
+					nextStation = `GRAY ${grayStations[i+1]}`
+					previousStation = `GRAY ${grayStations[i-1]}`
+					graph.set(currentStation, [i, previousStation, nextStation])
 				}
-				for (connection of grayConnections) {
-					graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
-				}
-	}
-
-	const getPointColor = (point) => {
-		if (redStations.includes(point)){
-			return "RED";
-		} else if (yellowStations.includes(point)) {
-			return "YELLOW";
-		} else if (blueStations.includes(point)) {
-			return "BLUE";
-		} else if (greenStations.includes(point)) {
-			return "GREEN";
-		} else if (violetStations.includes(point)) {
-			return "VIOLET";
-		} else if (magentaStations.includes(point)) {
-			return "MAGENTA";
-		} else if (airportExpressStations.includes(point)) {
-			return "AIRPORT";
-		} else if (pinkStations.includes(point)) {
-			return "PINK";
-		} else if (blue2Stations.includes(point)) {
-			return "BLUE2";
-		} else if (green2Stations.includes(point)) {
-			return "GREEN2";
-		} else if (rapidStations.includes(point)) {
-			return "RAPID";
-		} else if (grayStations.includes(point)) {
-			return "GRAY";
-		} else if (aquaStations.includes(point)) {
-			return "AQUA";
-		} 
-	}
-
-	useEffect(() => {
-		makeGraph()
-		if (startStation && endStation){
-			getRoute()
-		}
-	}, [])
+			}
+			for (connection of grayConnections) {
+				graph.set(connection[0], [...graph.get(connection[0]), connection[1]])
+			}
+	
 
 	const pathfindingHolder =  (start, end) => {
 
@@ -517,33 +426,15 @@ const Route = ({startStation, endStation}) => {
 		// stationsAfter.add(end)
 	}
 
-	const getRoute = () => {
-		const startColor = getPointColor(startStation)
-		const start = `${startColor} ${startStation}`
-		console.log(start)
-		const endColor = getPointColor(endStation)
-		const end = `${endColor} ${endStation}`
-		console.log(end)
-		const temp = pathfindingHolder(start, end)
-		console.log(temp)
-		setRoute(temp)
-	}
+	return pathfindingHolder(startStation, endStation)
 
-	return(
-		<>
-			<div className="lineWrapper">
-				{route.map((station, count) => {
-					if (route.length > 0) {
-						count ++;
-						return <Image number={count} station={station} />
-					}
-					return<></>
-				})}
-			</div>				
-			
-		</>
-		)
+}
 
-	}
-
-export default Route;
+export const getRoute = (startStation, endStation) => {
+	const startColor = getPointColor(startStation)
+	const start = `${startColor} ${startStation}`
+	const endColor = getPointColor(endStation)
+	const end = `${endColor} ${endStation}`
+	const finalRoute = routeComputer(start, end)
+	return finalRoute;
+}

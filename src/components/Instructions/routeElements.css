@@ -60,15 +60,6 @@
 	justify-content: flex-start;
 }
 
-.blip{
-	width: 15px;
-	height: 15px;
-	background: black;
-	border-radius: 50%;
-	margin-right: 20px;
-	transform: translate(0px, 2px);
-	z-index: 999;
-}
 .box{
 	width: 20px;
 	height: 20px;
@@ -81,45 +72,3 @@
 	z-index: 99999999;
 }
 
-.YELLOW{
-	background: #f6ff00;
-	}
-.BLUE{
-	background: #372aa8;
-		}
-.BLUE2{
-	background: #372aa8;
-	}
-.RED{
-	background: #ff0000;
-	}
-.GREEN{
-	background:  #1ad102;
-	}
-.GREEN2{
-	background:  #1ad102;
-	}
-.RAPID{
-	background:  #2a2a2a;
-	}
-.AIRPORT{
-	background: #ff8400;
-	}
-.VIOLET{
-	background:  #720d91;
-	}
-.MAGENTA{
-	background:  #ab055e;
-	}
-.AQUA{
-	background:  #05ab8f;
-	}
-.PINK{
-	background: #ffc7ee;
-	}
-.GRAY{
-	background: #404040;
-	}
-.defualt{
-	background: #000;
-}

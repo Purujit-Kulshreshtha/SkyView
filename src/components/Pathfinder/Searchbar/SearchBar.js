@@ -2,7 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 import './searchbarStyles.css';
 
 
-const SearchBarComponent = ({placeHolder, data, value, onChange}) => {
+const SearchBar = ({placeHolder, data, value, onChange}) => {
 
 	const [open, setOpen] = useState(false);
 	const [query, setQuery] = useState("");
@@ -80,4 +80,4 @@ const SearchBarComponent = ({placeHolder, data, value, onChange}) => {
 		)
 };
 
-export default SearchBarComponent;
+export default SearchBar

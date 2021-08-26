@@ -1,0 +1,35 @@
+.alert-container-green{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #a3cfbb;
+	padding: 0.5rem;
+	border: solid 2px  #198754;
+	width: 50%;
+	margin: 0 25%;
+	margin-bottom: 1rem;
+}
+
+.alert-text-green{
+	font-size: 20px;
+	font-weight: bold;
+	color:  #198754;
+}
+
+.alert-container-red{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #f1aeb5;
+	padding: 0.5rem;
+	border: solid 2px #dc3545;
+	width: 50%;
+	margin: 0 25%;
+	margin-bottom: 1.25rem;
+}
+
+.alert-text-red{
+	font-size: 20px;
+	font-weight: bold;
+	color: #dc3545;
+}

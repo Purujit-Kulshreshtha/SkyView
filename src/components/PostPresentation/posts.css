@@ -1,0 +1,10 @@
+h1{
+	/*background: red;*/
+}
+
+.posts-container{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}

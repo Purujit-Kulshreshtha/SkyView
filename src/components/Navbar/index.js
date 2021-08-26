@@ -3,19 +3,26 @@ import {FaBars, FaSubway} from 'react-icons/fa';
 import { Nav, NavbarContainer, NavLogo, MobileIcon, NavMenu, NavItem, NavLinks, NavBtn, NavBtnLink, 
 	ChromeNav, ChromeNavbarContainer, ChromeNavLogo, ChromeMobileIcon, ChromeNavMenu, ChromeNavItem, ChromeNavLinks, ChromeNavBtn, ChromeNavBtnLink } from './NavbarElements';
 import { animateScroll as scroll } from 'react-scroll';
+import './style.css'
+import {useDispatch} from 'react-redux';
+import {useHistory} from 'react-router-dom'
 
 import {isFirefox, isChrome, isChromium, isEdge} from 'react-device-detect';
 
 
 const Navbar = ({ toggle }) => {
+	const dispatch = useDispatch();
+	const history = useHistory();
 	
 	const [scrollNav, setScrollNav] = useState(false);
-		
+	
+	const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
+
+	console.log(user)
 
 	const changeNav = () => {
 		if (window.scrollY >= 80) {
 			setScrollNav(true)
-			console.log(scrollNav)
 		} else {
 			setScrollNav(false)
 		}
@@ -23,11 +30,21 @@ const Navbar = ({ toggle }) => {
 
 	useEffect(() => {
 		window.addEventListener('scroll', changeNav)
+
+		const token = user?.token;
+		setUser(JSON.parse(localStorage.getItem('profile')))
+
 	}, [])
 
 	const top = () => {
    	 scroll.scrollToTop();
 	};
+
+	const showUserMenu = () => {
+		dispatch( {type: "LOGOUT"})
+		history.push('/')
+		setUser(null);
+	}
 
 
 	if (isFirefox){
@@ -77,12 +94,16 @@ const Navbar = ({ toggle }) => {
 										</NavItem>
 									</NavMenu>
 									<NavBtn>
-										<NavBtnLink to='contact'
-											activeClass="active"
-										    spy={true}
-										    smooth={true}
-										    offset={-80}
-										    duration={500}>Contanct Us</NavBtnLink>
+
+										{user ? (
+											<div className="nav-user-info" onClick={showUserMenu}>
+												<img className="nav-profile-picture" alt={user.result.name} src={user.result.imageUrl} />
+											</div>
+											) : (
+										<NavBtnLink to='/login'
+											activeClass="active">Login</NavBtnLink>
+											)
+										}
 									</NavBtn>
 								</NavbarContainer>
 							</Nav>

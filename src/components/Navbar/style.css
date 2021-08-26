@@ -1,0 +1,15 @@
+.nav-user-info{
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	margin-right: -100px;
+	height: 80px;
+	cursor: pointer;
+}
+
+.nav-profile-picture{
+	width: 60px;
+	border-radius: 50%;
+}
+

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {InstructionsContainer, ImageWrap, ContentWrap, Heading, Content, Line, ButtonWrap, Ul} from './InstructionsElements';
 import {Button} from '../ButtonElement'
-import Legend from '../Pathfinder/Legend'
+import Legend from './Legend'
 // import instructionsIMG from '../../images/instructions.svg'
 
 
