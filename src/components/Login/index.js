@@ -1,8 +1,8 @@
 import React from 'react';
 import {GoogleLogin} from 'react-google-login';
-import Icon from './icon';
 import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom'
+import {FaGoogle} from "react-icons/fa"
 import "./style.css"
 
 const Login = () => {
@@ -45,8 +45,7 @@ const Login = () => {
 						<button className="google-login-button"
 						onClick={renderProps.onClick}
 						disabled={renderProps.disabled}
-						startIcon={<Icon />}
-						>Sign In With Google</button>)}
+						><FaGoogle className="google-logo"/> Sign In With Google</button>)}
 
 						onSuccess={googleSuccsess}
 						onFailure={googleFailure}
